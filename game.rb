@@ -1,5 +1,7 @@
 class Game
 
+  attr_reader :letters, :errors_count, :bad_letters, :good_letters, :status
+
   def initialize(slovo)
     @letters = get_letters(slovo)
     @errors_count = 0
@@ -46,9 +48,10 @@ class Game
         @good_letters << letter
       end
 
-      if @good_letters.uniq.sort == @letters.uniq.sort
+      if check_win?
         @status = 1
       end
+
     else
       @bad_letters << letter
       @errors_count += 1
@@ -56,24 +59,11 @@ class Game
     end
   end
 
-  def letters
-    @letters
+  def check_win?
+    if @good_letters.uniq.sort == @letters.uniq.sort
+      return true
+    else
+      return false
+    end
   end
-
-  def good_letters
-    @good_letters
-  end
-
-  def bad_letters
-    @bad_letters
-  end
-
-  def errors_count
-    @errors_count
-  end
-
-  def status
-    @status
-  end
-
 end
